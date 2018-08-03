@@ -10,14 +10,26 @@ const options = {
   }
 };
 
+var arr= []
+
 app.get('/scrape', function(req, res){
   rp(options)
   .then(($) => {
-    var result = $('#club-results-container').find('table.search-table');
-    console.log(result);
-    // result[0].children[0].each(function(i, elem) {
-    //   console.log(elem);
-    // });
+    var results = $('#club-results-container').find('table.search-table tbody tr.RVDataGridItem');
+    // var i;
+    // for (i = 0; i < results.length; i++) { 
+      
+    // }
+
+    results.each(function(i, elem) {
+      var currentRow = $(this);
+
+      // console.log(currentRow.find("td").eq(0).text());
+      arr.push({
+        col1_value: currentRow.find("td").eq(0).text()
+      })
+    })
+    res.send(arr);
   })
   .catch((err) => {
     console.log(err);
@@ -27,3 +39,13 @@ app.get('/scrape', function(req, res){
 app.listen('8081')
 console.log('Running on port 8081');
 exports = module.exports = app;
+
+
+
+// http://mycricket.cricket.com.au/common/pages/public/entitydetails.aspx?entityID=2413
+// http://mycricket.cricket.com.au/home.aspx?entityID=2413
+
+// result.each(function(i, td){
+//   currentRow = $(this);
+//   console.log(currentRow.find("td:eq(0)").text());
+//  })
