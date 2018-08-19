@@ -62,7 +62,7 @@ app.get('/club-details', function(req, res) {
        return affArray;
      }
      var clubHash = {
-       clubName:results.eq(0).text().trim(),
+       clubName: results.eq(0).text().trim().replace(/\n|\r|\t/g, ""),
        website: results.eq(1).find('a').attr('href'),
        facebookUrl: results.eq(2).find('a').eq(0).attr('href'),
        twitterUrl: results.eq(2).find('a').eq(1).attr('href'),
